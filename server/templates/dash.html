@@ -12,7 +12,7 @@
 {% else %}
 <div class="container m-auto p-5 rounded shadow-sm border bg-white mt-5">
     <h4 class="fw-bold text-center mb-3">Những lưu bút của bạn ({{ note_count }}/20)</h4>
-    <div class="row row-cols-3 d-flex justify-content-center align-items-center w-100 mb-5">
+    <div class="row row-cols-md-3 row-cols-1 d-flex justify-content-center align-items-center w-100 mb-5">
         {% for n in notes %}
         <div class="col p-3">
             <div class="border rounded p-3">
@@ -32,7 +32,7 @@
 {% endif %}
 <div class="container m-auto p-5 rounded shadow-sm border bg-white mt-5">
     <h4 class="fw-bold text-center mb-3">Cập nhật tài khoản</h4>
-    <div class="row row-cols-2 d-flex justify-content-center">
+    <div class="row row-cols-md-2 row-cols-1 d-flex justify-content-center">
         <div class="col p-3">
             <form method="POST" action="/dash/update-appreciation" id="update-form">
                 <h4>Thay đổi lời cảm ơn</h4>
