@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="m-auto p-4 rounded mt-5 bg-white shadow-sm border text-center" style="width: fit-content">
+    <h4>😇</h4>
+    <h4 class="fw-bold mb-3">Lưu bút của bạn đã được gửi</h4>
+    <p class="fw-semibold text-secondary">Lời cảm ơn từ <b>{{ user.username }}</b></p>
+    <span class="p-3 border rounded">
+        {{ user.thank_you_note }}
+    </span>
+</div>
+{% endblock %}

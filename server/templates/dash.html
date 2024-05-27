@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if notes == [] %}
+<div class="m-auto p-3 rounded col-lg-4 col-md-5 col-10 mt-5 bg-white shadow-sm border text-center">
+    <div class="alert alert-success fw-bold text-center">
+        🥳 Bạn đã tạo trang lưu bút của mình!
+    </div>
+    <p class="fw-semibold">Chia sẻ link dưới đây để nhận lưu bút!</p>
+    <input type="string" class="form-control text-center mb-3" value="{{ share_link }}" readonly>
+    <button class="m-auto btn btn-primary" onclick="copyToClipboardFunction()" id="copy-to-clipboard">Copy Link</button>
+</div>
+{% else %}
+<div class="container m-auto p-5 rounded shadow-sm border bg-white mt-5">
+    <h4 class="fw-bold text-center mb-3">Những lưu bút của bạn ({{ note_count }}/20)</h4>
+    <div class="row row-cols-3 d-flex justify-content-center align-items-center w-100 mb-5">
+        {% for n in notes %}
+        <div class="col p-3">
+            <div class="border rounded p-3">
+                <p class="fw-semibold">{{ n.sender }} đã gửi</p>
+                <p>{{ n.note_content }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+    <div class="text-center">
+        <p class="fw-semibold">Chia sẻ link dưới đây để nhận lưu bút!</p>
+        <input type="string" class="form-control text-center mb-3" value="{{ share_link }}" readonly>
+        <button class="m-auto btn btn-primary" onclick="copyToClipboardFunction()" id="copy-to-clipboard">Copy Link</button>
+    </div>
+</div>
+{% endif %}
+<div class="container m-auto p-5 rounded shadow-sm border bg-white mt-5">
+    <h4 class="fw-bold text-center mb-3">Cập nhật tài khoản</h4>
+    <div class="row row-cols-2 d-flex justify-content-center">
+        <div class="col p-3">
+            <form method="POST" action="/dash/update-appreciation" id="update-form">
+                <h4>Thay đổi lời cảm ơn</h4>
+                {{ update_appreciation.csrf_token() }}
+                <div class="form-group mb-3">
+                    <textarea name="thank_you_note" class="form-control">
+{{ current_user.thank_you_note }}
+                    </textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="update-form-button">Cập nhật lời cảm ơn</button>
+                <script>
+                    const updateForm = document.getElementById('update-form');
+                    const updateFormButton = document.getElementById('update-form-button');
+    
+                    updateForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        updateFormButton.disabled = true;
+                        updateFormButton.innerHTML = `
+                        <div class="spinner-border mx-1" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="m-0 mx-1">Đang tải</p>
+                        `;
+                        updateForm.submit();
+                    })
+                </script>
+            </form>
+        </div>
+        <div class="col p-3">
+            <form method="POST" action="/dash/update-avatar" enctype="multipart/form-data" id="update-avatar">
+                <h4>Thay đổi avatar</h4>
+                {{ update_avatar.csrf_token() }}
+                <div class="form-group mb-3">
+                    {{ update_avatar.avatar(class="form-control") }}
+                </div>
+                <button type="submit" class="btn btn-primary d-flex justify-content-center align-items-center" id="update-avatar-button">Cập nhật avatar</button>
+            </form>
+            <script>
+                const avatarForm = document.getElementById('update-avatar');
+                const avatarFormButton = document.getElementById('update-avatar-button');
+
+                avatarForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    avatarFormButton.disabled = true;
+                    avatarFormButton.innerHTML = `
+                    <div class="spinner-border mx-1" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="m-0 mx-1">Đang tải</p>
+                    `;
+                    avatarForm.submit();
+                })
+            </script>
+        </div>
+    </div>
+</div>
+<script>
+    const copyToClipboard = document.getElementById('copy-to-clipboard');
+    
+    function copyToClipboardFunction(){
+        navigator.clipboard.writeText('{{ share_link }}');
+        copyToClipboard.innerText = "Đã sao chép!";
+        setTimeout(() => {copyToClipboard.innerText = "Copy Link"}, 2000);
+    }
+</script>
+{% endblock %}

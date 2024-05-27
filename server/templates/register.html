@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container m-auto d-flex justify-content-center align-items-center p-5">
+    <form method="POST" action="/auth/register" class="col-lg-5 col-md-6 col-10" id="register-form">
+        <h4 class="fw-bold m-0">Đăng ký</h4>
+        <p class="text-secondary fw-semibold">Bạn đã có tài khoản? Đi đến trang <a href="/auth/login">đăng nhập</a></p>
+        {{ form.csrf_token() }}
+        <div class="form-group mb-3">
+            {{ form.username(class="form-control") }}
+        </div>
+        <div class="form-group mb-3">
+            {{ form.password(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary w-100 d-flex justify-content-center align-items-center" id="register-form-button">Đăng nhập</button>
+    </form>
+</div>
+<script>
+    const registerForm = document.getElementById('register-form');
+    const registerFormButton = document.getElementById('register-form-button');
+
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        registerFormButton.disabled = true;
+        registerFormButton.innerHTML = `
+        <div class="spinner-border mx-1" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="m-0 mx-1">Đang đăng ký</p>
+        `;
+        registerForm.submit();
+    })
+</script>
+{% endblock %}
