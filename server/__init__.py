@@ -7,6 +7,9 @@ app = Flask(__name__)
 load_dotenv()
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB')
 app.config['SECRET_KEY'] = os.getenv('SECRET')
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_pre_ping': True
+}
 
 # User Loader
 from flask_login import LoginManager

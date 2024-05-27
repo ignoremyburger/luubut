@@ -38,6 +38,9 @@ def send_to_user(username):
         if note_count > user.note_max:
             flash('Người dùng này đã quá hạn mức số lượng lưu bút!', 'error')
             return redirect('/')
+        if len(form.note_content.data) > 150:
+            flash("Lưu bút của bạn vượt quá 150 ký tự!", 'error')
+            return redirect(f'/send/{username}')
         n = Notes(
             user=user.id,
             sender=form.note_sender.data,
