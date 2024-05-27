@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
+{% block head %}
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://luubut.lol/" />
+    <meta property="og:title" content="Lưu Bút - để lại lưu bút đáng nhớ cho bạn bè" />
+    <meta property="og:description" content="Lưu Bút - để lại lưu bút đáng nhớ cho bạn bè" />
+    <meta property="og:image" content="{{ current_user.profile_picture }}" />
+    <!-- Twitter -->
+    <meta property="twitter:type" content="website" />
+    <meta property="twitter:url" content="https://luubut.lol/" />
+    <meta property="twitter:title" content="Lưu Bút - để lại lưu bút đáng nhớ cho bạn bè" />
+    <meta property="twitter:description" content="Lưu Bút - để lại lưu bút đáng nhớ cho bạn bè" />
+    <meta property="twitter:image" content="{{ current_user.profile_picture }}" />
+{% endblock %}
 {% block body %}
 <div class="m-auto p-4 rounded mt-5 bg-white shadow-sm border text-center" style="width: fit-content">
     <h4 class="fw-bold">🫶🏻 Hãy gửi một thông điệp ý nghĩa tới 💖</h4>
